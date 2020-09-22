@@ -11,7 +11,8 @@ def file_reading(path):
 
 def string_normalize(contacts_list_wrong):
     for id_, i in enumerate(contacts_list_wrong):
-        pattern = r"(\+7|8)+\s*\(*(\d{3})\)*\s*-*(\d{3})\s*-*\s*(\d{2})\s*-*\s*(\d{2})\s*\(*([доб.]*)\s*(\d+)*\)*"
+        pattern = r"(\+7|8)+\s*\(*(\d{3})\)*\s*-*(\d{3})\s*-*\s*" \
+                  r"(\d{2})\s*-*\s*(\d{2})\s*\(*([доб.]*)\s*(\d+)*\)*"
         regex = re.compile(pattern)
         result = regex.sub(r"+7(\2)\3-\4-\5\6\7", i[5])
         i[5] = result
@@ -27,7 +28,6 @@ def string_normalize(contacts_list_wrong):
 
 
 def double_remove(list_with_double):
-    full_name_list = []
     full_name_list = [f'{x[0]}, {x[1]}' for x in list_with_double]
     add_to_contact_list = []
 
@@ -35,7 +35,6 @@ def double_remove(list_with_double):
         count = 0
         for_delete = []
         for_add = []
-        temp_zip_list = []
         for j, item in enumerate(list_with_double):
             if name == f"{item[0]}, {item[1]}":
                 count += 1
@@ -66,10 +65,10 @@ def double_remove(list_with_double):
 
 
 def write_to_file(list_without_double):
-    with open("NEW_phonebook.csv", "w") as f:
+    with open("NEW_phonebook.csv", "w", newline='') as f:
         datawriter = csv.writer(f, delimiter=',')
         datawriter.writerows(list_without_double)
-    return print('kavabanga!!!')
+    return print('файл успешно записан')
 
 
 if __name__ == '__main__':
